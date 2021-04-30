@@ -33,16 +33,15 @@ aedes.subscribe("CASTER/#", (a,cb) => {
 
     console.log(topic, msg);
 
-    if(msg.success){
-        switch(command) {
-            case "GET_STATE":
-                mq_publish(`CASTER/${name}/SERVER_STATE`, deviceState[name]);
-                break;
-            default:
-                updateState(name, {[command]: msg.payload});
-                ws_broadcast(name, "STATE", deviceState[name]);
-        }
+    switch(command) {
+        case "GET_STATE":
+            mq_publish(`CASTER/${name}/SERVER_STATE`, deviceState[name]);
+            break;
+        default:
+            updateState(name, {[command]: msg.payload});
+            ws_broadcast(name, "STATE", deviceState[name]);
     }
+
     cb();
 });
 

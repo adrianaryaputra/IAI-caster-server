@@ -31,6 +31,8 @@ aedes.subscribe("CASTER/#", (a,cb) => {
     const msg = JSON.parse(a.payload.toString());
     deviceState[name] = deviceState[name] || {};
 
+    console.log(a);
+
     if(msg.success){
         switch(command) {
             case "GET_STATE":

@@ -1,0 +1,16 @@
+{
+  "name": "iai-caster-server-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adrianaryaputra",
+  "license": "MIT",
+  "dependencies": {
+    "aedes": "^0.46.0",
+    "ws": "^7.4.5"
+  }
+}

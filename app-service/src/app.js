@@ -34,6 +34,8 @@ aedes.subscribe("CASTER/#", (a,cb) => {
     console.log(topic, msg);
 
     switch(command) {
+        case "SERVER_STATE":
+            break;
         case "GET_STATE":
             mq_publish(`CASTER/${name}/SERVER_STATE`, deviceState[name]);
             break;

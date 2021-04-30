@@ -15,13 +15,13 @@ const wss = new WebSocket.Server({ port: process.env.WS_PORT }, () => console.lo
 // mq sub -> ws pub
 aedes.on("clientReady", c => {
     deviceState[c.id] = deviceState[c.id] || {};
-    updateState(c.id, {DEVICE_STATUS: true});
+    deviceState[c.id].DEVICE_STATUS = true;
     ws_broadcast(c.id, "STATE", deviceState[c.id]);
     mq_publish(`CASTER/${c.id}/SERVER_STATE`, deviceState[c.id]);
 });
 aedes.on("clientDisconnect", c => {
     deviceState[c.id] = deviceState[c.id] || {};
-    updateState(c.id, {DEVICE_STATUS: false});
+    deviceState[c.id].DEVICE_STATUS = false;
     ws_broadcast(c.id, "STATE", deviceState[c.id]);
 });
 aedes.subscribe("CASTER/#", (a,cb) => {

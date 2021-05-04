@@ -17,18 +17,10 @@ export default class Device extends BasicComponent{
             padding: "1em",
             borderRadius: "1em",
         });
-        // this.noInput = this.onNoInputTimeout(5000);
     }
 
-    // onNoInputTimeout(t) {
-    //     return setTimeout(() => this.stylize(this.element(), {backgroundColor: "rgba(255,0,0,0.2)"}), t);
-    // }
-
     update(state) {
-        this.stylize(this.element(), {backgroundColor: "rgba(0,255,0,0.2)"})
         this.state = state;
-        clearTimeout(this.noInput);
-        // this.noInput = this.onNoInputTimeout(5000);
         for (const key in state) {
             switch(key) {
                 case "AI":

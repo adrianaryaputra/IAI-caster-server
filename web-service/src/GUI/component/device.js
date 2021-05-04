@@ -23,6 +23,9 @@ export default class Device extends BasicComponent{
         this.state = state;
         for (const key in state) {
             switch(key) {
+                case "DEVICE_STATUS":
+                    this.deviceStatus.toggle(state[key]);
+                    break;
                 case "AI":
                     this.millMotorTopS.setValue(state[key][0]);
                     this.millMotorTopC.setValue(state[key][1]);

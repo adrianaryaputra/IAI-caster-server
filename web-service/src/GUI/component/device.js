@@ -63,7 +63,7 @@ export default class Device extends BasicComponent{
                 fontSize: "1.5rem",
                 margin: "0 0 var(--normal) .3em",
                 display: "grid",
-                gridTemplateColumns: "minmax(max-content, 1fr) 100px"
+                gridTemplateColumns: "minmax(max-content, 1fr) 200px"
             }
         });
 

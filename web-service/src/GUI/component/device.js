@@ -43,14 +43,14 @@ export default class Device extends BasicComponent{
                 case "DI":
                     this.motorPK1.toggle(state[key][1] === false);
                     this.motorPK2.toggle(state[key][0] === false);
-                    this.coolingTower1.toggle(state[key][13] === true);
+                    this.coolingTower1.toggle(state[key][13] === false);
                     this.coolingTower2.toggle(state[key][3] === false);
-                    this.motorPB1.toggle(state[key][4] === true);
+                    this.motorPB1.toggle(state[key][4] === false);
                     this.motorPB2.toggle(state[key][5] === true);
                     this.motorBending1.toggle(state[key][7] === true);
                     this.motorBending2.toggle(state[key][8] === true);
-                    this.millON.toggle(state[key][11] === true);
-                    this.coilerON.toggle(state[key][12] === true);
+                    this.millON.toggle(state[key][11] === false);
+                    this.coilerON.toggle(state[key][12] === false);
                     this.oilCoolant.toggle(state[key][6] === true);
                     this.hidrolikPK.toggle(state[key][9] === true);
                     this.hidrolikPB.toggle(state[key][10] === true);

@@ -28,6 +28,8 @@ function ws_onClose(evt) {
     setTimeout(() => location.reload(), 1000);
 }
 
+let deviceStyle = {}
+
 function ws_onMessage(evt) {
     let parsedEvt = JSON.parse(evt.data);
     console.log(parsedEvt);

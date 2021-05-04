@@ -35,10 +35,10 @@ export default class Indicator extends BasicComponent{
     toggle(logic) {
         if(logic) {
             this.elem.value.innerText = this.valueON;
-            this.stylize(this.elem.value, { backgroundColor: this.colorON });
+            this.stylize(this.element(), { backgroundColor: this.colorON });
         } else {
             this.elem.value.innerText = this.valueOFF;
-            this.stylize(this.elem.value, { backgroundColor: this.colorOFF });
+            this.stylize(this.element(), { backgroundColor: this.colorOFF });
         }
     }
 

@@ -27,12 +27,12 @@ export default class Device extends BasicComponent{
                     this.deviceStatus.toggle(state[key]);
                     break;
                 case "AI":
-                    this.millMotorTopS.setValue((""+state[key][0]).toFixed(2));
-                    this.millMotorTopC.setValue((""+state[key][1]).toFixed(2));
-                    this.millMotorBtmS.setValue((""+state[key][2]).toFixed(2));
-                    this.millMotorBtmC.setValue((""+state[key][3]).toFixed(2));
-                    this.coilerMotorS.setValue((""+state[key][4]).toFixed(2));
-                    this.coilerMotorC.setValue((""+state[key][5]).toFixed(2));
+                    this.millMotorTopS.setValue(state[key][0].toFixed(2));
+                    this.millMotorTopC.setValue(state[key][1].toFixed(2));
+                    this.millMotorBtmS.setValue(state[key][2].toFixed(2));
+                    this.millMotorBtmC.setValue(state[key][3].toFixed(2));
+                    this.coilerMotorS.setValue(state[key][4].toFixed(2));
+                    this.coilerMotorC.setValue(state[key][5].toFixed(2));
                     break;
 
                 case "DI":

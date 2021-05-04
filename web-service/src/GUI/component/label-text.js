@@ -35,7 +35,7 @@ export default class LabelText extends BasicComponent{
             parent: this.element(),
             style: {
                 backgroundColor: "var(--color-background)",
-                padding: ".1em .3em",
+                padding: ".5em",
                 borderRadius: "inherit",
                 display: "grid",
                 gridTemplateColumns: "auto auto",

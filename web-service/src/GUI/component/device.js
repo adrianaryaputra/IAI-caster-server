@@ -63,12 +63,17 @@ export default class Device extends BasicComponent{
                 fontSize: "1.5rem",
                 margin: "0 0 var(--normal) .3em",
                 display: "grid",
-                gridTemplateColumns: "minmax(max-content, 1fr) 200px"
+                gridTemplateColumns: "minmax(max-content, 1fr) 200px",
+                alignItem: "center"
             }
         });
 
-        this.deviceName     = new TitleText(this.name, { parent: this.headerHolder.element() });
-        this.deviceStatus   = new Indicator({ valueON: "ONLINE", valueOFF: "OFFLINE" }, { parent: this.headerHolder.element() });
+        const indicatorStyle = {
+            padding: ".5em"
+        }
+
+        this.deviceName     = new TitleText(this.name, { parent: this.headerHolder.element(), style:{ fontSize: "1.2em" } });
+        this.deviceStatus   = new Indicator({ valueON: "ONLINE", valueOFF: "OFFLINE" }, { parent: this.headerHolder.element(), style: {padding:".2em"} });
 
         this.analogData     = new BasicComponent({
             parent: this.element(),
@@ -100,19 +105,19 @@ export default class Device extends BasicComponent{
             }
         });
 
-        this.motorPK1       = new Indicator({ valueON: "Motor PK1",         valueOFF: "Motor PK1",         }, { parent: this.digitalData.element() });
-        this.motorPK2       = new Indicator({ valueON: "Motor PK2",         valueOFF: "Motor PK2",         }, { parent: this.digitalData.element() });
-        this.coolingTower1  = new Indicator({ valueON: "Cooling Tower 1",   valueOFF: "Cooling Tower 1",   }, { parent: this.digitalData.element() });
-        this.coolingTower2  = new Indicator({ valueON: "Cooling Tower 2",   valueOFF: "Cooling Tower 2",   }, { parent: this.digitalData.element() });
-        this.motorPB1       = new Indicator({ valueON: "Motor PB1",         valueOFF: "Motor PB1",         }, { parent: this.digitalData.element() });
-        this.motorPB2       = new Indicator({ valueON: "Motor PB2",         valueOFF: "Motor PB2",         }, { parent: this.digitalData.element() });
-        this.motorBending1  = new Indicator({ valueON: "Motor Bending 1",   valueOFF: "Motor Bending 1",   }, { parent: this.digitalData.element() });
-        this.motorBending2  = new Indicator({ valueON: "Motor Bending 2",   valueOFF: "Motor Bending 2",   }, { parent: this.digitalData.element() });
-        this.millON         = new Indicator({ valueON: "Mill",              valueOFF: "Mill",              }, { parent: this.digitalData.element() });
-        this.coilerON       = new Indicator({ valueON: "Coiler",            valueOFF: "Coiler",            }, { parent: this.digitalData.element() });
-        this.oilCoolant     = new Indicator({ valueON: "Oil Coolant",       valueOFF: "Oil Coolant",       }, { parent: this.digitalData.element() });
-        this.hidrolikPK     = new Indicator({ valueON: "Hidrolik PK",       valueOFF: "Hidrolik PK",       }, { parent: this.digitalData.element() });
-        this.hidrolikPB     = new Indicator({ valueON: "Hidrolik PB",       valueOFF: "Hidrolik PB",       }, { parent: this.digitalData.element() });
+        this.motorPK1       = new Indicator({ valueON: "Motor PK1",         valueOFF: "Motor PK1",         }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorPK2       = new Indicator({ valueON: "Motor PK2",         valueOFF: "Motor PK2",         }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.coolingTower1  = new Indicator({ valueON: "Cooling Tower 1",   valueOFF: "Cooling Tower 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.coolingTower2  = new Indicator({ valueON: "Cooling Tower 2",   valueOFF: "Cooling Tower 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorPB1       = new Indicator({ valueON: "Motor PB1",         valueOFF: "Motor PB1",         }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorPB2       = new Indicator({ valueON: "Motor PB2",         valueOFF: "Motor PB2",         }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorBending1  = new Indicator({ valueON: "Motor Bending 1",   valueOFF: "Motor Bending 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorBending2  = new Indicator({ valueON: "Motor Bending 2",   valueOFF: "Motor Bending 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.millON         = new Indicator({ valueON: "Mill",              valueOFF: "Mill",              }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.coilerON       = new Indicator({ valueON: "Coiler",            valueOFF: "Coiler",            }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.oilCoolant     = new Indicator({ valueON: "Oil Coolant",       valueOFF: "Oil Coolant",       }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.hidrolikPK     = new Indicator({ valueON: "Hidrolik PK",       valueOFF: "Hidrolik PK",       }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.hidrolikPB     = new Indicator({ valueON: "Hidrolik PB",       valueOFF: "Hidrolik PB",       }, { parent: this.digitalData.element(), style: indicatorStyle });
     }
 
 }

@@ -11,6 +11,7 @@ export default class TitleText extends BasicComponent{
 
         // set holder style
         this.stylize(this.element(), {
+            margin: "auto 0"
         });
 
         this.elem.value = document.createElement("h3");

@@ -25,7 +25,7 @@ export default class Indicator extends BasicComponent{
         this.elem.value = document.createElement("h3");
         this.element().appendChild(this.elem.value);
         this.elem.value.innerText = "###";
-        this.stylize(this.elem.value, {
+        this.stylize(this.element(), {
             backgroundColor: this.colorOFF,
             borderRadius: "var(--small)",
             textAlign: "center",

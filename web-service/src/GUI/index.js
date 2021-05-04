@@ -35,17 +35,22 @@ function ws_onMessage(evt) {
         case "SERVER_STATE":
             for (const deviceName of Object.keys(parsedEvt.payload).sort()) {
                 console.log("creating", deviceName);
-                // devices[deviceName] = new Device(deviceName, parsedEvt.payload[deviceName], {
-                //     parent: deviceHolder.element(),
-                //     style: deviceStyle,
-                // });
+                devices[deviceName] = new Device(deviceName, parsedEvt.payload[deviceName], {
+                    parent: deviceHolder.element(),
+                    style: deviceStyle,
+                });
             }
             break;
         case "STATE":
-            let aiDisp = document.querySelectorAll('h2')
-            if(parsedEvt.payload) if(parsedEvt.payload.AI) parsedEvt.payload.AI.forEach((pin, idx) => {
-                aiDisp[idx].innerText = pin
-            });
+            if(devices[parsedEvt.device]) {
+                devices[parsedEvt.device].update(parsedEvt.payload);
+            } else {
+                devices[parsedEvt.device] = new Device(parsedEvt.device, parsedEvt.payload, {
+                    parent: deviceHolder.element(),
+                    style: deviceStyle,
+                });
+                console.log("creating", deviceName);
+            }
             break;
     }
 }
@@ -68,9 +73,9 @@ const deviceHolder = new BasicComponent({
     }
 });
 
-const caster = new Device("Caster", {}, {
-    parent: deviceHolder.element()
-})
+// const caster = new Device("Caster", {}, {
+//     parent: deviceHolder.element()
+// })
 
 const run = () => {
     ws_load();

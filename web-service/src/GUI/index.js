@@ -1,3 +1,6 @@
+import Device from './component/device.js';
+import BasicComponent from './component/basic-component.js';
+
 var wsUri = `ws://${location.hostname}:${+location.port+1}`;
 var websocket = new WebSocket(wsUri);
 
@@ -53,6 +56,21 @@ function ws_onError(evt) {
     console.log(`WS: ${evt.type}`);
     console.log(evt.data);
 }
+
+const deviceHolder = new BasicComponent({
+    parent: document.body,
+    style: {
+        display: "grid",
+        margin: "1em",
+        gridTemplateColumns: "1fr",
+        gridAutoFlow: "column",
+        gap: "1em"
+    }
+});
+
+const caster = new Device("Caster", {}, {
+    parent: deviceHolder.element()
+})
 
 const run = () => {
     ws_load();

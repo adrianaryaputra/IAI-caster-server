@@ -36,6 +36,9 @@ aedes.subscribe("CASTER/#", (a,cb) => {
     switch(command) {
         case "SERVER_STATE":
             break;
+        case "MODBUS_ERROR":
+            ws_broadcast(name, command, msg);
+            break;
         case "GET_STATE":
             mq_publish(`CASTER/${name}/SERVER_STATE`, deviceState[name]);
             break;

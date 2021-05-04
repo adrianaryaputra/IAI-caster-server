@@ -1,10 +1,11 @@
 import BasicComponent from './basic-component.js';
 export default class LabelText extends BasicComponent{
 
-    constructor(label, value, options) {
+    constructor({label="###", value="###", unit=""}, options) {
         super(options);
         this.label = label;
         this.value = value;
+        this.unit = unit;
         this.draw();
     }
 
@@ -29,13 +30,30 @@ export default class LabelText extends BasicComponent{
             padding: ".1em .3em",
         });
 
+
+        this.valueHolder = new BasicComponent({
+            parent: this.element(),
+            style: {
+                backgroundColor: "var(--color-background)",
+                padding: ".1em .3em",
+                borderRadius: "inherit",
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+            }
+        })
+
         this.elem.value = document.createElement("h3");
-        this.element().appendChild(this.elem.value);
+        this.valueHolder.element().appendChild(this.elem.value);
         this.setValue(this.value)
         this.stylize(this.elem.value, {
-            backgroundColor: "var(--color-background)",
-            padding: ".1em .3em",
-            borderRadius: "inherit",
+            textAlign: "left"
+        });
+
+        this.elem.unit = document.createElement("h3");
+        this.valueHolder.element().appendChild(this.elem.unit);
+        this.elem.unit.innerText = this.unit;
+        this.stylize(this.elem.unit, {
+            textAlign: "right"
         });
     }
 

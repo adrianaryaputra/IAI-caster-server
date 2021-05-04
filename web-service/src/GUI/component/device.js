@@ -80,14 +80,14 @@ export default class Device extends BasicComponent{
             }
         });
 
-        this.millMotorTopS  = new LabelText("Mill Top Spd.", "###", { parent: this.analogData.element() });
-        this.millMotorTopC  = new LabelText("Mill Top Cur.", "###", { parent: this.analogData.element() });
+        this.millMotorTopS  = new LabelText({label:"Mill Top Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
+        this.millMotorTopC  = new LabelText({label:"Mill Top Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
-        this.millMotorBtmS  = new LabelText("Mill Btm Spd.", "###", { parent: this.analogData.element() });
-        this.millMotorBtmC  = new LabelText("Mill Btm Cur.", "###", { parent: this.analogData.element() });
+        this.millMotorBtmS  = new LabelText({label:"Mill Btm Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
+        this.millMotorBtmC  = new LabelText({label:"Mill Btm Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
-        this.coilerMotorS   = new LabelText("Coiler Spd.", "###", { parent: this.analogData.element() });
-        this.coilerMotorC   = new LabelText("Coiler Cur.", "###", { parent: this.analogData.element() });
+        this.coilerMotorS   = new LabelText({label:"Coiler Mtr Spd.", value:"###", unit:"rpm"}, { parent: this.analogData.element() });
+        this.coilerMotorC   = new LabelText({label:"Coiler Mtr Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
         this.digitalData    = new BasicComponent({
             parent: this.element(),

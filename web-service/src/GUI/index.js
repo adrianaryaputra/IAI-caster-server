@@ -70,7 +70,7 @@ const deviceHolder = new BasicComponent({
         display: "grid",
         margin: "1em",
         gridTemplateColumns: "1fr",
-        gridAutoFlow: "column",
+        gridAutoFlow: "row",
         gap: "1em"
     }
 });

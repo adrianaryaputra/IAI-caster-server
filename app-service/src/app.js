@@ -43,13 +43,14 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             mq_publish(`CASTER/${name}/SERVER_STATE`, deviceState[name]);
             break;
         case "AI":
-            msg[0] = msg[0]*0.75;
-            msg[2] = msg[2]*0.75;
-            msg[4] = msg[4]/4095;
-            msg[1] = msg[1]*0.0225;
-            msg[3] = msg[3]*0.0225;
-            msg[5] = msg[5]*0.012;
-            updateState(name, {[command]: msg.payload});
+            m = msg.payload;
+            m[0] = m[0]*0.75;
+            m[2] = m[2]*0.75;
+            m[4] = m[4]/4095;
+            m[1] = m[1]*0.0225;
+            m[3] = m[3]*0.0225;
+            m[5] = m[5]*0.012;
+            updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
             break;
         default:

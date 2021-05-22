@@ -15,7 +15,7 @@ export default class LabelText extends BasicComponent{
         this.stylize(this.element(), {
             display: "grid",
             gap: ".5em",
-            gridTemplateColumns: "minmax(100px,1fr) minmax(100px,1fr)",
+            gridTemplateColumns: "minmax(100px,1fr) 20px minmax(100px,1fr)",
             gridAutoFlow: "row",
             // backgroundColor: "#000",
             borderRadius: ".3em",
@@ -27,7 +27,15 @@ export default class LabelText extends BasicComponent{
         this.element().appendChild(this.elem.label);
         this.setLabel(this.label);
         this.stylize(this.elem.label, {
-            padding: ".1em .3em",
+            margin: "auto 0",
+        });
+
+        this.elem.colon = document.createElement("h3");
+        this.elem.colon.textContent = ":";
+        this.element().appendChild(this.elem.colon);
+        this.stylize(this.elem.colon, {
+            margin: "auto 0",
+            textAlign: "right"
         });
 
 

@@ -162,7 +162,7 @@ function createSpeedChart({
     let yesterday = (new Date(Date.now() - (864e5/2))).setSeconds(0,0);
     let current = new Date().setSeconds(0,0);
     dp[new Date(yesterday).toISOString()] = 0;
-    dp[new Date(today).toISOString()] = 0;
+    dp[new Date(current).toISOString()] = 0;
 
     const labels = Object.keys(dp).map(v => new Date(v));
     const datapoints = Object.values(dp);

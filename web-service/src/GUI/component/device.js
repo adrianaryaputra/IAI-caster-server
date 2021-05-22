@@ -213,7 +213,7 @@ function createSpeedChart({
             plugins: {
                 title: {
                     display: false,
-                    text: 'Kecepatan Pon'
+                    text: ''
                 },
             },
             interaction: {

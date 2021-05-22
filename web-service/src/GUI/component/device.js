@@ -80,7 +80,7 @@ export default class Device extends BasicComponent{
             style: {
                 display: "grid",
                 margin: "1em 0",
-                gridTemplateColumns: "repeat(2, minmax(340px, 1fr))",
+                gridTemplateColumns: "repeat(3, minmax(340px, 1fr))",
                 gap: "1em"
             }
         });
@@ -91,8 +91,8 @@ export default class Device extends BasicComponent{
         this.millMotorBtmS  = new LabelText({label:"Mill Btm Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
         this.millMotorBtmC  = new LabelText({label:"Mill Btm Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
-        this.coilerMotorS   = new LabelText({label:"Coiler Mtr Spd.", value:"###", unit:"rpm"}, { parent: this.analogData.element() });
-        this.coilerMotorC   = new LabelText({label:"Coiler Mtr Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
+        this.coilerMotorS   = new LabelText({label:"Coiler M.Spd.", value:"###", unit:"rpm"}, { parent: this.analogData.element() });
+        this.coilerMotorC   = new LabelText({label:"Coiler M.Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
         this.digitalData    = new BasicComponent({
             parent: this.element(),

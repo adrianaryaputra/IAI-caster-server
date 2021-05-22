@@ -15,7 +15,7 @@ export default class LabelText extends BasicComponent{
         this.stylize(this.element(), {
             display: "grid",
             gap: ".5em",
-            gridTemplateColumns: "minmax(200px,.5fr) minmax(250px,1fr)",
+            gridTemplateColumns: "minmax(100px,1fr) minmax(100px,1fr)",
             gridAutoFlow: "row",
             // backgroundColor: "#000",
             borderRadius: ".3em",

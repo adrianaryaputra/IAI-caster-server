@@ -54,7 +54,10 @@ export default class Device extends BasicComponent{
                 case "TEMP":
                     this.tempInputAl.setValue(state[key][0].toFixed(2));
                     this.tempCastAl.setValue(state[key][1].toFixed(2));
-
+                    this.tempCoolInTop.setValue(state[key][2].toFixed(2));
+                    this.tempCoolInBtm.setValue(state[key][3].toFixed(2));
+                    this.tempCoolOutTop.setValue(state[key][4].toFixed(2));
+                    this.tempCoolInTop.setValue(state[key][5].toFixed(2));
             }
         }
         return this;

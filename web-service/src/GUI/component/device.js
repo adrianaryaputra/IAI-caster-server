@@ -81,7 +81,7 @@ export default class Device extends BasicComponent{
                 display: "grid",
                 margin: "1em 0",
                 gridTemplateColumns: "repeat(3, minmax(340px, 1fr))",
-                gap: "2.5em"
+                gap: ".5em 2.5em"
             }
         });
 

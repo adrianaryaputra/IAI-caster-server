@@ -58,11 +58,13 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             m[5] = m[5]*0.012;
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
+            ws_broadcast(name, "DATA", dataBuffer[name]);
             db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
+            ws_broadcast(name, "DATA", dataBuffer[name]);
             db_savedata(name);
     }
 
@@ -83,9 +85,7 @@ wss.on('connection', (ws) => {
     });
 });
 
-
-setTimeout(() => db_getdata("CASTER"), 10000);
-
+initDataBuffer();
 
 
 function ws_broadcast(device, command, payload) {
@@ -110,16 +110,18 @@ async function db_savedata(name) {
     ) {
         // simpan ke DB
         try{
+            let dataToSave = {
+                AI: deviceState["AI"],
+                DI: deviceState["DI"],
+                TEMP: deviceState["TEMP"],
+                TIMESTAMP: new Date(),
+            };
+            dataBuffering(name, dataToSave);
             const save = await model.data.updateOne(
                 { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setSeconds(0,0)) },
                 {
                     $push: {
-                        DATA: {
-                            AI: deviceState["AI"],
-                            DI: deviceState["DI"],
-                            TEMP: deviceState["TEMP"],
-                            TIMESTAMP: new Date(),
-                        },
+                        DATA: dataToSave,
                     },
                     $inc: { DATA_COUNT: 1 },
                     $setOnInsert: { 
@@ -139,21 +141,59 @@ async function db_savedata(name) {
 
 
 
-async function db_getdata(mesin, datefrom = new Date(0), dateto = new Date()) {
+async function db_getdata(query) {
     try {
-        const result = await model.data.find({
-            NAMA_MESIN: mesin,
-            DATE_FROM: { $gte: datefrom },
-            DATE_TO: { $lte: dateto },
-        });
-        console.log("==============================");
-        console.log("DB DATA:", result);
-        console.log("==============================");
+        const result = await model.data.find(query);
         return result;
     } catch(e) {
         console.error(e);
     }
     return;
+}
+
+
+
+let dataBuffer = {};
+async function initDataBuffer() {
+
+    let dbData = await db_getdata({
+        DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
+    });
+    
+    dbData.forEach(dbucket => {
+        dataBuffer[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
+        dataBuffer[dbucket.NAMA_MESIN] = {
+            DATE_FROM: dbucket.DATE_FROM,
+            DATA: dbucket.DATA,
+            DATA_COUNT: dbucket.DATA_COUNT,
+        };
+    });
+
+    setTimeout(() => initDataBuffer(), 3e5);
+}
+
+
+
+function dataBuffering(name, data) {
+    // check if time bucket is due
+    let bufferDate = new Date(dataBuffer[name][dataBuffer.length-1].DATE_FROM);
+    let currentDate = new Date((new Date()).setSeconds(0,0));
+    if(bufferDate < currentDate){
+        dataBuffer[name].push({
+            DATE_FROM: currentDate,
+            NAMA_MESIN: name,
+            DATA_COUNT: 0,
+            DATE_TO: currentDate.setSeconds(60,0),
+            DATA: []
+        })
+    }
+    dataBuffer[name][dataBuffer.length-1].DATA_COUNT += 1;
+    dataBuffer[name][dataBuffer.length-1].DATA.push({
+        AI: data.AI,
+        DI: data.DI,
+        TEMP: data.TEMP,
+        TIMESTAMP: data.TIMESTAMP
+    });
 }
 
 

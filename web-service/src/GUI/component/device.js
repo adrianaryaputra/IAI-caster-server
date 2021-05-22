@@ -57,7 +57,7 @@ export default class Device extends BasicComponent{
                     this.tempCoolInTop.setValue(state[key][2].toFixed(2));
                     this.tempCoolInBtm.setValue(state[key][3].toFixed(2));
                     this.tempCoolOutTop.setValue(state[key][4].toFixed(2));
-                    this.tempCoolOutBottom.setValue(state[key][5].toFixed(2));
+                    this.tempCoolOutBtm.setValue(state[key][5].toFixed(2));
             }
         }
         return this;

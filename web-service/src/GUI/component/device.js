@@ -2,6 +2,7 @@ import BasicComponent from './basic-component.js';
 import LabelText from './label-text.js';
 import TitleText from './title-text.js';
 import Indicator from './indicator.js';
+import ChartComponent from './chart.js';
 export default class Device extends BasicComponent{
 
     constructor(name, state = {}, options) {
@@ -132,6 +133,122 @@ export default class Device extends BasicComponent{
         this.oilCoolant     = new Indicator({ valueON: "Oil Coolant",       valueOFF: "Oil Coolant",       }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.hidrolikPK     = new Indicator({ valueON: "Hidrolik PK",       valueOFF: "Hidrolik PK",       }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.hidrolikPB     = new Indicator({ valueON: "Hidrolik PB",       valueOFF: "Hidrolik PB",       }, { parent: this.digitalData.element(), style: indicatorStyle });
+
+        this.chartData    = new BasicComponent({
+            parent: this.element(),
+            style: {
+                display: "grid",
+                margin: "1em 0",
+                gridTemplateRow: "repeat(2 200px)",
+                gap: "1em"
+            }
+        });
+
+        this.chartSpeed     = createSpeedChart({parent: this.chartData.element()});
+        this.chartTemp      = createSpeedChart({parent: this.chartData.element()});
     }
 
+}
+
+
+function createSpeedChart({
+    parent, 
+    style = {
+        margin: "2em 1em 1em 1em",
+    }
+}) {
+
+    let dp = {};
+    let yesterday = (new Date(Date.now() - (864e5/2))).setSeconds(0,0);
+    let current = new Date().setSeconds(0,0);
+    dp[new Date(yesterday).toISOString()] = 0;
+    dp[new Date(today).toISOString()] = 0;
+
+    const labels = Object.keys(dp).map(v => new Date(v));
+    const datapoints = Object.values(dp);
+
+    const chartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Mill Top Speed (mm/min)',
+            data: datapoints,
+            borderColor: "rgba(100,255,100,.5)",
+            backgroundColor: "rgba(100,255,100,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Mill Bottom Speed (mm/min)',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }]
+    };
+    
+    const chartConfig = {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false,
+                    text: 'Kecepatan Pon'
+                },
+            },
+            interaction: {
+                intersect: false,
+                axis: 'x',
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "hour",
+                        tooltipFormat: 'DD/MM/YYYY HH:mm'
+                    },
+                    title: {
+                        display: true
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: ''
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 20
+                }
+            }
+        },
+    };
+    
+    return new ChartComponent(chartConfig, {
+        height: "auto",
+        width: "auto",
+    }, {
+        parent: parent,
+        style: {
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+        }
+    });
+}
+
+function setChart(chart, labels, datapoints) {
+    console.log("updating chart...");
+    chart.chart.data.labels = labels;
+    datapoints.forEach((data, dataidx) => {
+        chart.chart.data.datasets[dataidx].data = data;
+    });
+    chart.chart.update();
 }

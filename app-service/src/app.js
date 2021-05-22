@@ -178,17 +178,22 @@ function dataBuffering(name, data) {
     console.log("DATA BUFFERING", name, data);
     console.log("DATA BUFFER", dataBuffer);
     // check if time bucket is due
+    let bufferDate;
+    let currentDate;
     if(Object.keys(dataBuffer).length > 0){
-        let bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATE_FROM);
+        bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATE_FROM);
         console.log("BUFFER DATE", bufferDate);
-        let currentDate = new Date((new Date()).setSeconds(0,0));
+        currentDate = new Date((new Date()).setSeconds(0,0));
         console.log("CURRENT DATE", currentDate);
     } else {
         dataBuffer[name] = [];
         bufferDate = 0;
+        console.log("BUFFER DATE", bufferDate);
         currentDate = Date.now();
+        console.log("CURRENT DATE", currentDate);
     }
     if(bufferDate < currentDate){
+        console.log("PUSHING NEW BUCKET");
         dataBuffer[name].push({
             DATE_FROM: currentDate,
             NAMA_MESIN: name,

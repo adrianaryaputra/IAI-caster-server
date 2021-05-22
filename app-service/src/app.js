@@ -177,7 +177,7 @@ async function initDataBuffer() {
 function dataBuffering(name, data) {
     console.log("DATA BUFFERING", name, data);
     // check if time bucket is due
-    let bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer).length-1].DATE_FROM);
+    let bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATE_FROM);
     let currentDate = new Date((new Date()).setSeconds(0,0));
     if(bufferDate < currentDate){
         dataBuffer[name].push({

@@ -1,5 +1,11 @@
 let deviceState = {};
 
+// database import
+const {mongoose, model} = require('./db.model');
+mongoose.connect(process.env.DB_LINK, {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
 
 // mq import
 const aedes = require('aedes')();
@@ -52,10 +58,12 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             m[5] = m[5]*0.012;
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
+            db_save(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
+            db_save(name);
     }
 
     cb();
@@ -87,6 +95,31 @@ function ws_broadcast(device, command, payload) {
             }));
         }
     });
+}
+
+
+
+function db_save(name) {
+    if(deviceState["AI"] && deviceState["DI"] && deviceState["TEMP"]) {
+        // simpan ke DB
+        const save = await model.data.updateOne(
+            { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setMinutes(0,0,0)) },
+            {
+                $push: {
+                    DATA: {
+                        AI: deviceState["AI"],
+                        DI: deviceState["DI"],
+                        TEMP: deviceState["TEMP"],
+                        TIMESTAMP: new Date(),
+                    },
+                },
+                $inc: { DATA_COUNT: 1 },
+                $setOnInsert: { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setMinutes(0,0,0)) },
+            },
+            { upsert: true }
+        );
+        console.log("DB SAVE:", save);
+    }
 }
 
 

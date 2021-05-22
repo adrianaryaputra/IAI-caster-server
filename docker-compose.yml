@@ -2,14 +2,14 @@ version: '3'
 
 services: 
 
-  # mongo-mesin-caster:
-  #   container_name: caster-mesin-mongo
-  #   restart: always
-  #   image: mongo
-  #   ports: 
-  #     - '27019:27017'
-  #   volumes: 
-  #     - ~/mongo/caster:/data/db 
+  mongo-mesin-caster:
+    container_name: caster-mesin-mongo
+    restart: always
+    image: mongo
+    ports: 
+      - '27019:27017'
+    volumes: 
+      - ~/mongo/caster:/data/db 
   
   app-mesin-caster:
     container_name: caster-mesin-app
@@ -23,7 +23,7 @@ services:
     environment: 
       - MQ_PORT=5002
       - WS_PORT=8899
-      - DB_LINK=mongodb://mongo-mesin-caster:27017/iai1
+      - DB_LINK=mongodb://mongo-mesin-caster:27017/caster
 
   web-mesin-caster:
     container_name: caster-mesin-web

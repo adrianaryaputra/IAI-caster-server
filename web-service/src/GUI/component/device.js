@@ -99,7 +99,7 @@ export default class Device extends BasicComponent{
             style: {
                 display: "grid",
                 margin: "1em 0",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
                 gridAutoFlow: "row",
                 gap: "1em"
             }
@@ -107,12 +107,12 @@ export default class Device extends BasicComponent{
 
         this.motorPK1       = new Indicator({ valueON: "Motor PK1",         valueOFF: "Motor PK1",         }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.motorPK2       = new Indicator({ valueON: "Motor PK2",         valueOFF: "Motor PK2",         }, { parent: this.digitalData.element(), style: indicatorStyle });
-        this.coolingTower1  = new Indicator({ valueON: "Cooling Tower 1",   valueOFF: "Cooling Tower 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
-        this.coolingTower2  = new Indicator({ valueON: "Cooling Tower 2",   valueOFF: "Cooling Tower 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.coolingTower1  = new Indicator({ valueON: "Cooling Tower 1",   valueOFF: "Cooling Twr. 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.coolingTower2  = new Indicator({ valueON: "Cooling Tower 2",   valueOFF: "Cooling Twr. 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.motorPB1       = new Indicator({ valueON: "Motor PB1",         valueOFF: "Motor PB1",         }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.motorPB2       = new Indicator({ valueON: "Motor PB2",         valueOFF: "Motor PB2",         }, { parent: this.digitalData.element(), style: indicatorStyle });
-        this.motorBending1  = new Indicator({ valueON: "Motor Bending 1",   valueOFF: "Motor Bending 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
-        this.motorBending2  = new Indicator({ valueON: "Motor Bending 2",   valueOFF: "Motor Bending 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorBending1  = new Indicator({ valueON: "Motor Bending 1",   valueOFF: "Motor Bnd. 1",   }, { parent: this.digitalData.element(), style: indicatorStyle });
+        this.motorBending2  = new Indicator({ valueON: "Motor Bending 2",   valueOFF: "Motor Bnd. 2",   }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.millON         = new Indicator({ valueON: "Mill",              valueOFF: "Mill",              }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.coilerON       = new Indicator({ valueON: "Coiler",            valueOFF: "Coiler",            }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.oilCoolant     = new Indicator({ valueON: "Oil Coolant",       valueOFF: "Oil Coolant",       }, { parent: this.digitalData.element(), style: indicatorStyle });

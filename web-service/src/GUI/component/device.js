@@ -273,6 +273,7 @@ function createSpeedChart({
                         text: ''
                     },
                     suggestedMin: 0,
+                    suggestedMax: 1,
                 }
             }
         },
@@ -401,6 +402,7 @@ function createTempChart({
                         text: ''
                     },
                     suggestedMin: 0,
+                    suggestedMax: 1,
                 }
             }
         },

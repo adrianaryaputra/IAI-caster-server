@@ -58,12 +58,12 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             m[5] = m[5]*0.012;
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
-            db_save(name);
+            db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
-            db_save(name);
+            db_savedata(name);
     }
 
     cb();
@@ -84,6 +84,9 @@ wss.on('connection', (ws) => {
 });
 
 
+db_getdata();
+
+
 
 function ws_broadcast(device, command, payload) {
     wss.clients.forEach((client) => {
@@ -99,35 +102,56 @@ function ws_broadcast(device, command, payload) {
 
 
 
-async function db_save(name) {
+async function db_savedata(name) {
     if(
         deviceState[name].AI && 
         deviceState[name].DI && 
         deviceState[name].TEMP
     ) {
         // simpan ke DB
-        const save = await model.data.updateOne(
-            { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setSeconds(0,0)) },
-            {
-                $push: {
-                    DATA: {
-                        AI: deviceState["AI"],
-                        DI: deviceState["DI"],
-                        TEMP: deviceState["TEMP"],
-                        TIMESTAMP: new Date(),
+        try{
+            const save = await model.data.updateOne(
+                { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setSeconds(0,0)) },
+                {
+                    $push: {
+                        DATA: {
+                            AI: deviceState["AI"],
+                            DI: deviceState["DI"],
+                            TEMP: deviceState["TEMP"],
+                            TIMESTAMP: new Date(),
+                        },
+                    },
+                    $inc: { DATA_COUNT: 1 },
+                    $setOnInsert: { 
+                        NAMA_MESIN: name, 
+                        DATE_FROM: new Date((new Date()).setSeconds(0,0)),
+                        DATE_TO: new Date((new Date()).setSeconds(60,0)),
                     },
                 },
-                $inc: { DATA_COUNT: 1 },
-                $setOnInsert: { 
-                    NAMA_MESIN: name, 
-                    DATE_FROM: new Date((new Date()).setSeconds(0,0)),
-                    DATE_TO: new Date((new Date()).setSeconds(60,0)),
-                },
-            },
-            { upsert: true }
-        );
-        console.log("DB SAVE:", save);
+                { upsert: true }
+            );
+            console.log("DB SAVE:", save);
+        } catch(e) {
+            console.error(e)
+        }
     }
+}
+
+
+
+async function db_getdata(mesin, datefrom = new Date(0), dateto = new Date()) {
+    try {
+        const result = await model.data.find({
+            NAMA_MESIN: mesin,
+            DATE_FROM: { $gte: datefrom },
+            DATE_TO: { $lte: dateto },
+        });
+        console.log("DB DATA:", result);
+        return result;
+    } catch(e) {
+        console.error(e);
+    }
+    return;
 }
 
 

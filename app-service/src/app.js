@@ -84,7 +84,7 @@ wss.on('connection', (ws) => {
 });
 
 
-db_getdata();
+setTimeout(() => db_getdata(), 10000);
 
 
 
@@ -146,7 +146,9 @@ async function db_getdata(mesin, datefrom = new Date(0), dateto = new Date()) {
             DATE_FROM: { $gte: datefrom },
             DATE_TO: { $lte: dateto },
         });
+        console.log("==============================");
         console.log("DB DATA:", result);
+        console.log("==============================");
         return result;
     } catch(e) {
         console.error(e);

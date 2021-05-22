@@ -93,6 +93,14 @@ export default class Device extends BasicComponent{
         this.millMotorBtmC  = new LabelText({label:"Mill Bottom Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
         this.coilerMotorC   = new LabelText({label:"Coiler Motor Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
+        this.tempInputAl        = new LabelText({label:"Input Alum. Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        this.tempCoolInTop      = new LabelText({label:"Cool Top In Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        this.tempCoolOutTop     = new LabelText({label:"Cool Top Out Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+
+        this.tempCastAl         = new LabelText({label:"Cast Alum. Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        this.tempCoolInBtm      = new LabelText({label:"Cool Btm In Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        this.tempCoolOutBtm     = new LabelText({label:"Cool Btm Out Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+
         this.digitalData    = new BasicComponent({
             parent: this.element(),
             style: {

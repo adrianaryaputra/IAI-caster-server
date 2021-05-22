@@ -144,9 +144,15 @@ export default class Device extends BasicComponent{
             }
         });
 
-        this.chartSpeedHold = new BasicComponent({parent: this.chartData.element()});
+        this.chartSpeedHold = new BasicComponent({
+            parent: this.chartData.element(),
+            height: "200px",
+        });
         this.chartSpeed     = createSpeedChart({parent: this.chartSpeedHold.element()});
-        this.chartTempHold  = new BasicComponent({parent: this.chartData.element()});
+        this.chartTempHold  = new BasicComponent({
+            parent: this.chartData.element(),
+            height: "200px",
+        });
         this.chartTemp      = createSpeedChart({parent: this.chartTempHold.element()});
     }
 

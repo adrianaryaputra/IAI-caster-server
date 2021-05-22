@@ -187,9 +187,9 @@ function dataBuffering(name, data) {
         console.log("CURRENT DATE", currentDate);
     } else {
         dataBuffer[name] = [];
-        bufferDate = 0;
+        bufferDate = new Date(0);
         console.log("BUFFER DATE", bufferDate);
-        currentDate = Date.now();
+        currentDate = new Date();
         console.log("CURRENT DATE", currentDate);
     }
     if(bufferDate < currentDate){

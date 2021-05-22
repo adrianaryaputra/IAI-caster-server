@@ -99,7 +99,7 @@ function ws_broadcast(device, command, payload) {
 
 
 
-function db_save(name) {
+async function db_save(name) {
     if(deviceState["AI"] && deviceState["DI"] && deviceState["TEMP"]) {
         // simpan ke DB
         const save = await model.data.updateOne(

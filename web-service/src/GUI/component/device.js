@@ -201,6 +201,42 @@ function createSpeedChart({
             fill: true,
             cubicInterpolationMode: 'monotone',
             tension: 0.4
+        }, {
+            label: 'Coiler Motor Speed (rpm)',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        },{
+            label: 'Mill Top Current (Amp)',
+            data: datapoints,
+            borderColor: "rgba(100,255,100,.5)",
+            backgroundColor: "rgba(100,255,100,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Mill Bottom Current (Amp)',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Coiler Motor Current (Amp)',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
         }]
     };
     

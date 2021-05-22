@@ -84,7 +84,7 @@ wss.on('connection', (ws) => {
 });
 
 
-setTimeout(() => db_getdata(), 10000);
+setTimeout(() => db_getdata("CASTER"), 10000);
 
 
 

@@ -100,8 +100,10 @@ function ws_broadcast(device, command, payload) {
 
 
 async function db_save(name) {
+    console.log("db save called", deviceState);
     if(deviceState["AI"] && deviceState["DI"] && deviceState["TEMP"]) {
         // simpan ke DB
+        console.log("saving to database ...");
         const save = await model.data.updateOne(
             { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setMinutes(0,0,0)) },
             {

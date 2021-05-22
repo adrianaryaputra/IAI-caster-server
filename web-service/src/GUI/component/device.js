@@ -159,7 +159,7 @@ export default class Device extends BasicComponent{
                 height: "200px",
             }
         });
-        this.chartTemp      = createSpeedChart({parent: this.chartTempHold.element()});
+        this.chartTemp      = createTempChart({parent: this.chartTempHold.element()});
     }
 
 }
@@ -237,7 +237,134 @@ function createSpeedChart({
                         text: ''
                     },
                     suggestedMin: 0,
-                    suggestedMax: 20
+                }
+            }
+        },
+    };
+    
+    return new ChartComponent(chartConfig, {
+        height: "auto",
+        width: "auto",
+    }, {
+        parent: parent,
+        style: {
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+        }
+    });
+}
+
+function createTempChart({
+    parent, 
+    style = {
+        margin: "2em 1em 1em 1em",
+    }
+}) {
+
+    let dp = {};
+    let yesterday = (new Date(Date.now() - (864e5/2))).setSeconds(0,0);
+    let current = new Date().setSeconds(0,0);
+    dp[new Date(yesterday).toISOString()] = 0;
+    dp[new Date(current).toISOString()] = 0;
+
+    const labels = Object.keys(dp).map(v => new Date(v));
+    const datapoints = Object.values(dp);
+
+    const chartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Input Alu. Temp.',
+            data: datapoints,
+            borderColor: "rgba(255,100,100,.5)",
+            backgroundColor: "rgba(255,100,100,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cast Alu. Temp.',
+            data: datapoints,
+            borderColor: "rgba(100,255,100,.5)",
+            backgroundColor: "rgba(100,255,100,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Top IN Temp.',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Top OUT Temp.',
+            data: datapoints,
+            borderColor: "rgba(100,255,255,.5)",
+            backgroundColor: "rgba(100,255,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Btm IN Temp.',
+            data: datapoints,
+            borderColor: "rgba(255,100,255,.5)",
+            backgroundColor: "rgba(255,100,255,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Btm OUT Temp.',
+            data: datapoints,
+            borderColor: "rgba(255,255,100,.5)",
+            backgroundColor: "rgba(255,255,100,.5)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }]
+    };
+    
+    const chartConfig = {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false,
+                    text: ''
+                },
+            },
+            interaction: {
+                intersect: false,
+                axis: 'x',
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "hour",
+                        tooltipFormat: 'DD/MM/YYYY HH:mm'
+                    },
+                    title: {
+                        display: true
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: ''
+                    },
+                    suggestedMin: 0,
                 }
             }
         },

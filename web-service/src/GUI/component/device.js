@@ -50,6 +50,10 @@ export default class Device extends BasicComponent{
                     this.hidrolikPK.toggle(state[key][9] === true);
                     this.hidrolikPB.toggle(state[key][10] === true);
                     break;
+                
+                case "TEMP":
+                    this.tempInputAl.setValue(state[key][0].toFixed(2));
+                    this.tempCastAl.setValue(state[key][1].toFixed(2));
 
             }
         }

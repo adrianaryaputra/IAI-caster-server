@@ -176,6 +176,7 @@ async function initDataBuffer() {
 
 function dataBuffering(name, data) {
     console.log("DATA BUFFERING", name, data);
+    console.log("DATA BUFFER", dataBuffer);
     // check if time bucket is due
     let bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATE_FROM);
     console.log("BUFFER DATE", bufferDate);

@@ -118,7 +118,11 @@ async function db_save(name) {
                     },
                 },
                 $inc: { DATA_COUNT: 1 },
-                $setOnInsert: { NAMA_MESIN: name, DATE_FROM: new Date((new Date()).setSeconds(0,0)) },
+                $setOnInsert: { 
+                    NAMA_MESIN: name, 
+                    DATE_FROM: new Date((new Date()).setSeconds(0,0)),
+                    DATE_TO: new Date((new Date()).setSeconds(60,0)),
+                },
             },
             { upsert: true }
         );

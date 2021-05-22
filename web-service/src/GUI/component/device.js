@@ -147,6 +147,7 @@ export default class Device extends BasicComponent{
         this.chartSpeedHold = new BasicComponent({
             parent: this.chartData.element(),
             style: {
+                position: "relative",
                 height: "200px",
             }
         });
@@ -154,6 +155,7 @@ export default class Device extends BasicComponent{
         this.chartTempHold  = new BasicComponent({
             parent: this.chartData.element(),
             style: {
+                position: "relative",
                 height: "200px",
             }
         });

@@ -184,6 +184,7 @@ function dataBuffering(name, data) {
         let currentDate = new Date((new Date()).setSeconds(0,0));
         console.log("CURRENT DATE", currentDate);
     } else {
+        dataBuffer[name] = [];
         bufferDate = 0;
         currentDate = Date.now();
     }

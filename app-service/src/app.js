@@ -111,9 +111,9 @@ async function db_savedata(name) {
         // simpan ke DB
         try{
             let dataToSave = {
-                AI: deviceState["AI"],
-                DI: deviceState["DI"],
-                TEMP: deviceState["TEMP"],
+                AI: deviceState[name]["AI"],
+                DI: deviceState[name]["DI"],
+                TEMP: deviceState[name]["TEMP"],
                 TIMESTAMP: new Date(),
             };
             dataBuffering(name, dataToSave);

@@ -75,10 +75,6 @@ const deviceHolder = new BasicComponent({
     }
 });
 
-// const caster = new Device("Caster", {}, {
-//     parent: deviceHolder.element()
-// })
-
 const run = () => {
     ws_load();
 }

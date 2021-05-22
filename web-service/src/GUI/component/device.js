@@ -99,7 +99,7 @@ export default class Device extends BasicComponent{
             style: {
                 display: "grid",
                 margin: "1em 0",
-                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
                 gridAutoFlow: "row",
                 gap: "1em"
             }

@@ -80,12 +80,12 @@ export default class Device extends BasicComponent{
                     setChart(
                         this.chartSpeed,
                         state[key].map(v => new Date(v.TIMESTAMP)),
-                        transpose(state[key].map(v => v.AI.slice(0,3)))
+                        transpose(state[key].map(v => [v.AI[0], v.AI[2], v.AI[4]]))
                     );
                     setChart(
                         this.chartAmp,
                         state[key].map(v => new Date(v.TIMESTAMP)),
-                        transpose(state[key].map(v => v.AI.slice(3,6)))
+                        transpose(state[key].map(v => [v.AI[1], v.AI[3], v.AI[5]]))
                     );
             }
         }

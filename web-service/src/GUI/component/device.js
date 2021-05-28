@@ -442,7 +442,7 @@ function createTempChart({
 }
 
 function setChart(chart, labels, datapoints) {
-    console.log("updating chart...");
+    console.log("updating chart...", chart, labels, datapoints);
     chart.chart.data.labels = labels;
     datapoints.forEach((data, dataidx) => {
         chart.chart.data.datasets[dataidx].data = data;

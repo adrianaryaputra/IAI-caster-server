@@ -159,6 +159,8 @@ let dataBuffer = {};
 let dataBufferDebug = {};
 async function initDataBuffer() {
 
+    ws_broadcast("CASTER", "INITDATA", "called");
+
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
     });

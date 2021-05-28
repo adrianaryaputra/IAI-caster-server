@@ -134,7 +134,6 @@ async function db_savedata(name) {
                 },
                 { upsert: true }
             );
-            console.log("DB SAVE:", save);
         } catch(e) {
             console.error(e)
         }

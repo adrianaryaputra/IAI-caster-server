@@ -68,14 +68,24 @@ export default class Device extends BasicComponent{
                     console.log("RECV DATA", state[key]);
                     console.log("chartTemp", this.chartTemp);
                     setChart(
-                        this.chartTemp,
+                        this.chartTempAlloy,
                         state[key].map(v => new Date(v.TIMESTAMP)),
-                        transpose(state[key].map(v => v.TEMP))
+                        transpose(state[key].map(v => v.TEMP).slice(0,2))
+                    );
+                    setChart(
+                        this.chartTempCooler,
+                        state[key].map(v => new Date(v.TIMESTAMP)),
+                        transpose(state[key].map(v => v.TEMP).slice(2,6))
                     );
                     setChart(
                         this.chartSpeed,
                         state[key].map(v => new Date(v.TIMESTAMP)),
-                        transpose(state[key].map(v => v.AI))
+                        transpose(state[key].map(v => v.AI).slice(0,3))
+                    );
+                    setChart(
+                        this.chartAmp,
+                        state[key].map(v => new Date(v.TIMESTAMP)),
+                        transpose(state[key].map(v => v.AI).slice(3,6))
                     );
             }
         }
@@ -157,7 +167,7 @@ export default class Device extends BasicComponent{
             style: {
                 display: "grid",
                 margin: "1em 0",
-                gridTemplateRow: "repeat(2 200px)",
+                gridTemplateRow: "repeat(4 200px)",
                 gap: "1em"
             }
         });
@@ -170,14 +180,33 @@ export default class Device extends BasicComponent{
             }
         });
         this.chartSpeed     = createSpeedChart({parent: this.chartSpeedHold.element()});
-        this.chartTempHold  = new BasicComponent({
+
+        this.chartAmpHold = new BasicComponent({
             parent: this.chartData.element(),
             style: {
                 position: "relative",
                 height: "200px",
             }
         });
-        this.chartTemp      = createTempChart({parent: this.chartTempHold.element()});
+        this.chartAmp     = createAmpChart({parent: this.chartAmpHold.element()});
+
+        this.chartTempAlloyHold  = new BasicComponent({
+            parent: this.chartData.element(),
+            style: {
+                position: "relative",
+                height: "200px",
+            }
+        });
+        this.chartTempAlloy      = createTempAlloyChart({parent: this.chartTempAlloyHold.element()});
+
+        this.chartTempCoolerHold  = new BasicComponent({
+            parent: this.chartData.element(),
+            style: {
+                position: "relative",
+                height: "200px",
+            }
+        });
+        this.chartTempCooler      = createTempCoolerChart({parent: this.chartTempCoolerHold.element()});
     }
 
 }
@@ -209,7 +238,7 @@ function createSpeedChart({
         datasets: [{
             label: 'Mill Top Speed (mm/min)',
             data: datapoints,
-            borderColor: "rgba(100,255,100,.5)",
+            borderColor: "rgba(255,100,100,.5)",
             backgroundColor: "rgba(100,255,100,0)",
             pointRadius: 1,
             fill: true,
@@ -218,7 +247,7 @@ function createSpeedChart({
         }, {
             label: 'Mill Bottom Speed (mm/min)',
             data: datapoints,
-            borderColor: "rgba(100,100,255,.5)",
+            borderColor: "rgba(100,255,100,.5)",
             backgroundColor: "rgba(100,100,255,0)",
             pointRadius: 1,
             fill: true,
@@ -233,10 +262,86 @@ function createSpeedChart({
             fill: true,
             cubicInterpolationMode: 'monotone',
             tension: 0.4
-        },{
+        },]
+    };
+    
+    const chartConfig = {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false,
+                    text: ''
+                },
+            },
+            interaction: {
+                intersect: false,
+                axis: 'x',
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "hour",
+                        tooltipFormat: 'DD/MM/YYYY HH:mm'
+                    },
+                    title: {
+                        display: true
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: ''
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 1,
+                }
+            }
+        },
+    };
+    
+    return new ChartComponent(chartConfig, {
+        height: "auto",
+        width: "auto",
+    }, {
+        parent: parent,
+        style: {
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+        }
+    });
+}
+
+
+function createAmpChart({
+    parent, 
+    style = {
+        margin: "2em 1em 1em 1em",
+    }
+}) {
+
+    let dp = {};
+    let yesterday = (new Date(Date.now() - (864e5/2))).setSeconds(0,0);
+    let current = new Date().setSeconds(0,0);
+    dp[new Date(yesterday).toISOString()] = 0;
+    dp[new Date(current).toISOString()] = 0;
+
+    const labels = Object.keys(dp).map(v => new Date(v));
+    const datapoints = Object.values(dp);
+
+    const chartData = {
+        labels: labels,
+        datasets: [{
             label: 'Mill Top Current (Amp)',
             data: datapoints,
-            borderColor: "rgba(100,255,100,.5)",
+            borderColor: "rgba(255,100,100,.5)",
             backgroundColor: "rgba(100,255,100,0)",
             pointRadius: 1,
             fill: true,
@@ -245,7 +350,7 @@ function createSpeedChart({
         }, {
             label: 'Mill Bottom Current (Amp)',
             data: datapoints,
-            borderColor: "rgba(100,100,255,.5)",
+            borderColor: "rgba(100,255,100,.5)",
             backgroundColor: "rgba(100,100,255,0)",
             pointRadius: 1,
             fill: true,
@@ -317,7 +422,8 @@ function createSpeedChart({
     });
 }
 
-function createTempChart({
+
+function createTempAlloyChart({
     parent, 
     style = {
         margin: "2em 1em 1em 1em",
@@ -445,6 +551,119 @@ function createTempChart({
         }
     });
 }
+
+
+function createTempCoolerChart({
+    parent, 
+    style = {
+        margin: "2em 1em 1em 1em",
+    }
+}) {
+
+    let dp = {};
+    let yesterday = (new Date(Date.now() - (864e5/2))).setSeconds(0,0);
+    let current = new Date().setSeconds(0,0);
+    dp[new Date(yesterday).toISOString()] = 0;
+    dp[new Date(current).toISOString()] = 0;
+
+    const labels = Object.keys(dp).map(v => new Date(v));
+    const datapoints = Object.values(dp);
+
+    const chartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Cool Top IN Temp.',
+            data: datapoints,
+            borderColor: "rgba(100,100,255,.5)",
+            backgroundColor: "rgba(100,100,255,0)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Top OUT Temp.',
+            data: datapoints,
+            borderColor: "rgba(100,255,255,.5)",
+            backgroundColor: "rgba(100,255,255,0)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Btm IN Temp.',
+            data: datapoints,
+            borderColor: "rgba(255,100,255,.5)",
+            backgroundColor: "rgba(255,100,255,0)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }, {
+            label: 'Cool Btm OUT Temp.',
+            data: datapoints,
+            borderColor: "rgba(255,255,100,.5)",
+            backgroundColor: "rgba(255,255,100,0)",
+            pointRadius: 1,
+            fill: true,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }]
+    };
+    
+    const chartConfig = {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: false,
+                    text: ''
+                },
+            },
+            interaction: {
+                intersect: false,
+                axis: 'x',
+            },
+            scales: {
+                x: {
+                    type: "time",
+                    time: {
+                        unit: "hour",
+                        tooltipFormat: 'DD/MM/YYYY HH:mm'
+                    },
+                    title: {
+                        display: true
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: ''
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 1,
+                }
+            }
+        },
+    };
+    
+    return new ChartComponent(chartConfig, {
+        height: "auto",
+        width: "auto",
+    }, {
+        parent: parent,
+        style: {
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+        }
+    });
+}
+
 
 function setChart(chart, labels, datapoints) {
     console.log("updating chart...", chart, labels, datapoints);

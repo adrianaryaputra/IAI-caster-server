@@ -162,6 +162,8 @@ async function initDataBuffer() {
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
     });
+
+    ws_broadcast("CASTER","DBDATA", dbData);
     
     dbData.forEach(dbucket => {
         dataBufferDebug[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
@@ -174,7 +176,7 @@ async function initDataBuffer() {
 
     ws_broadcast("CASTER", "DATAD", dataBufferDebug);
 
-    setTimeout(() => initDataBuffer(), 3e5);
+    setTimeout(() => initDataBuffer(), 10000);
 }
 
 

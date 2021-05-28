@@ -59,13 +59,11 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             m[5] = m[5]*0.012;
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
-            sendData();
             db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
-            sendData();
             db_savedata(name);
     }
 
@@ -95,17 +93,6 @@ function ws_broadcast(device, command, payload) {
                 device,
                 command, 
                 payload,
-            }));
-        }
-    });
-}
-
-function sendData() {
-    wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({
-                command: "DATA", 
-                payload: dataBuffer,
             }));
         }
     });
@@ -239,6 +226,11 @@ function ws_handleIncoming(client, command, value) {
                 payload: deviceState
             }));
             break;
+        case "DATA":
+            client.send(JSON.stringify({
+                command, 
+                payload: dataBuffer,
+            }));
     }
 }
 

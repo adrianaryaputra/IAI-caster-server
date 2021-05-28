@@ -21,6 +21,8 @@ function ws_send(command, value) {
       
 function ws_onOpen(evt) {
     console.log("websocket opened...");
+    ws_send("DATA",true);
+    setInterval(() => ws_send("DATA", true), 6e4);
 }
       
 function ws_onClose(evt) {

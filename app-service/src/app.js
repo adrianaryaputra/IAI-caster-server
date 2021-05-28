@@ -86,7 +86,7 @@ wss.on('connection', (ws) => {
     });
 });
 
-initDataBuffer();
+// initDataBuffer();
 
 
 function ws_broadcast(device, command, payload) {

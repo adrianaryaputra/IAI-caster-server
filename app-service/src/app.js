@@ -162,7 +162,6 @@ async function initDataBuffer() {
     
     dbData.forEach(dbucket => {
         if(dataBuffer[dbucket.NAMA_MESIN] === undefined) dataBuffer[dbucket.NAMA_MESIN] = [];
-        console.log("DATA BUFFER = ", dataBuffer);
         dataBuffer[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
         dataBuffer[dbucket.NAMA_MESIN].push({
             DATE_FROM: dbucket.DATE_FROM,

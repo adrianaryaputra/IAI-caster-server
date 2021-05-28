@@ -158,7 +158,7 @@ let dataBuffer = {};
 let dataBufferDebug = {};
 async function initDataBuffer() {
 
-    setTimeout(() => initDataBuffer(), 5000);
+    dataBufferDebug = {}
 
     console.log("init data buffer");
     ws_broadcast("CASTER", "INITDATA", "called");
@@ -184,6 +184,7 @@ async function initDataBuffer() {
     });
 
     ws_broadcast("CASTER", "DATAD", dataBufferDebug);
+    setTimeout(() => initDataBuffer(), 5000);
 }
 
 

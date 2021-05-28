@@ -55,8 +55,8 @@ function ws_onMessage(evt) {
             }
             break;
         case "DATA":
-            let measureData = [];
             for (const deviceName in parsedEvt.payload) {
+                let measureData = [];
                 if(Array.isArray(parsedEvt.payload[deviceName])) {
                     measureData = measureData.concat(
                         parsedEvt.payload[deviceName].reduce((acc,cur) => {
@@ -64,8 +64,12 @@ function ws_onMessage(evt) {
                         }, [])
                     );
                 }
+
+                measureData = measureData.sort((a,b) => {
+                    return new Date(a.TIMESTAMP) - new Date(b.TIMESTAMP)
+                });
             }
-            console.log(measureData);
+            
     }
 }
 

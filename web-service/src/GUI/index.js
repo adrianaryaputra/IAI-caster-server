@@ -54,9 +54,18 @@ function ws_onMessage(evt) {
                 console.log("creating", deviceName);
             }
             break;
-        // case "DATA":
-        //     if(Array.isArray(parsedEvt.payload)) pass
-        //     if(devices[parsedEvt.device]) devices[parsedEvt.device].update() 
+        case "DATA":
+            let measureData = [];
+            for (const deviceName in parsedEvt.payload) {
+                if(Array.isArray(parsedEvt.payload[deviceName])) {
+                    measureData = measureData.concat(
+                        parsedEvt.payload[deviceName].reduce((acc,cur) => {
+                            if(Array.isArray(cur.DATA)) return acc.concat(cur.DATA);
+                        }, [])
+                    );
+                }
+            }
+            console.log(measureData);
     }
 }
 

@@ -178,8 +178,8 @@ export default class Device extends BasicComponent{
 }
 
 
-function transpose(m){ 
-    return m.map((_, colIndex) => array.map(row => row[colIndex]));
+function transpose(array){ 
+    return array[0].map((_, colIndex) => array.map(row => row[colIndex]));
 }
 
 

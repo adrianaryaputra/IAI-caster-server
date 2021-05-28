@@ -3,6 +3,9 @@ import LabelText from './label-text.js';
 import TitleText from './title-text.js';
 import Indicator from './indicator.js';
 import ChartComponent from './chart.js';
+
+
+
 export default class Device extends BasicComponent{
 
     constructor(name, state = {}, options) {
@@ -63,6 +66,11 @@ export default class Device extends BasicComponent{
                 
                 case "DATA":
                     console.log("RECV DATA", state[key]);
+                    setChart(
+                        this.chartTemp.chart,
+                        state[key].map(v => new Date(v.TIMESTAMP)),
+                        transpose(state[key].map(v => v.TEMP))
+                    )
             }
         }
         return this;
@@ -166,6 +174,11 @@ export default class Device extends BasicComponent{
         this.chartTemp      = createTempChart({parent: this.chartTempHold.element()});
     }
 
+}
+
+
+function transpose(m){ 
+    m[0].map((x,i) => m.map(x => x[i]))
 }
 
 

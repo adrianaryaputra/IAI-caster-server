@@ -459,42 +459,6 @@ function createTempAlloyChart({
             fill: true,
             cubicInterpolationMode: 'monotone',
             tension: 0.4
-        }, {
-            label: 'Cool Top IN Temp.',
-            data: datapoints,
-            borderColor: "rgba(100,100,255,.5)",
-            backgroundColor: "rgba(100,100,255,0)",
-            pointRadius: 1,
-            fill: true,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.4
-        }, {
-            label: 'Cool Top OUT Temp.',
-            data: datapoints,
-            borderColor: "rgba(100,255,255,.5)",
-            backgroundColor: "rgba(100,255,255,0)",
-            pointRadius: 1,
-            fill: true,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.4
-        }, {
-            label: 'Cool Btm IN Temp.',
-            data: datapoints,
-            borderColor: "rgba(255,100,255,.5)",
-            backgroundColor: "rgba(255,100,255,0)",
-            pointRadius: 1,
-            fill: true,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.4
-        }, {
-            label: 'Cool Btm OUT Temp.',
-            data: datapoints,
-            borderColor: "rgba(255,255,100,.5)",
-            backgroundColor: "rgba(255,255,100,0)",
-            pointRadius: 1,
-            fill: true,
-            cubicInterpolationMode: 'monotone',
-            tension: 0.4
         }]
     };
     

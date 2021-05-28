@@ -71,7 +71,12 @@ export default class Device extends BasicComponent{
                         this.chartTemp,
                         state[key].map(v => new Date(v.TIMESTAMP)),
                         transpose(state[key].map(v => v.TEMP))
-                    )
+                    );
+                    setChart(
+                        this.chartSpeed,
+                        state[key].map(v => new Date(v.TIMESTAMP)),
+                        transpose(state[key].map(v => v.AI))
+                    );
             }
         }
         return this;

@@ -54,6 +54,9 @@ function ws_onMessage(evt) {
                 console.log("creating", deviceName);
             }
             break;
+        // case "DATA":
+        //     if(Array.isArray(parsedEvt.payload)) pass
+        //     if(devices[parsedEvt.device]) devices[parsedEvt.device].update() 
     }
 }
 

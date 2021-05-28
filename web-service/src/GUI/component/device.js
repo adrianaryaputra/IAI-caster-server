@@ -59,6 +59,10 @@ export default class Device extends BasicComponent{
                     this.tempCoolInBtm.setValue(state[key][3].toFixed(2));
                     this.tempCoolOutTop.setValue(state[key][4].toFixed(2));
                     this.tempCoolOutBtm.setValue(state[key][5].toFixed(2));
+                    break;
+                
+                case "DATA":
+                    console.log("RECV DATA", state[key]);
             }
         }
         return this;

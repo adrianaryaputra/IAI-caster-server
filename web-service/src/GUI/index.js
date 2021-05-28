@@ -68,6 +68,8 @@ function ws_onMessage(evt) {
                 measureData = measureData.sort((a,b) => {
                     return new Date(a.TIMESTAMP) - new Date(b.TIMESTAMP)
                 });
+
+                devices[deviceName].update({ DATA: measureData });
             }
             
     }

@@ -59,14 +59,14 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
             ws_broadcast(name, "DATA", dataBuffer);
-            ws_broadcast(name, "DATAD", dataBufferDebug);
+            ws_broadcast(name, "DATAD", dataBuffer);
             db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
             ws_broadcast(name, "DATA", dataBuffer);
-            ws_broadcast(name, "DATAD", dataBufferDebug);
+            ws_broadcast(name, "DATAD", dataBuffer);
             db_savedata(name);
     }
 
@@ -87,7 +87,7 @@ wss.on('connection', (ws) => {
     });
 });
 
-setTimeout(() => initDataBuffer(), 10000);
+initDataBuffer();
 
 
 function ws_broadcast(device, command, payload) {
@@ -155,26 +155,19 @@ async function db_getdata(query) {
 
 
 let dataBuffer = {};
-let dataBufferDebug = {};
 async function initDataBuffer() {
 
-    dataBufferDebug = {}
-
-    console.log("init data buffer");
-    ws_broadcast("CASTER", "INITDATA", "called");
+    dataBuffer = {}
 
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
     });
-
-    console.log("dbdata", dbData);
-    ws_broadcast("CASTER","DBDATA", dbData);
     
     dbData.forEach(dbucket => {
-        if(dataBufferDebug[dbucket.NAMA_MESIN] === undefined) dataBufferDebug[dbucket.NAMA_MESIN] = [];
-        console.log("DATA BUFFER = ", dataBufferDebug);
-        dataBufferDebug[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
-        dataBufferDebug[dbucket.NAMA_MESIN].push({
+        if(dataBuffer[dbucket.NAMA_MESIN] === undefined) dataBuffer[dbucket.NAMA_MESIN] = [];
+        console.log("DATA BUFFER = ", dataBuffer);
+        dataBuffer[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
+        dataBuffer[dbucket.NAMA_MESIN].push({
             DATE_FROM: dbucket.DATE_FROM,
             DATE_TO: dbucket.DATE_TO,
             DATA: dbucket.DATA,
@@ -183,8 +176,8 @@ async function initDataBuffer() {
         });
     });
 
-    ws_broadcast("CASTER", "DATAD", dataBufferDebug);
-    setTimeout(() => initDataBuffer(), 5000);
+    ws_broadcast("CASTER", "DATAD", dataBuffer);
+    setTimeout(() => initDataBuffer(), 3e5);
 }
 
 

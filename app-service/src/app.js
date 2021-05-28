@@ -158,6 +158,8 @@ let dataBuffer = {};
 let dataBufferDebug = {};
 async function initDataBuffer() {
 
+    setTimeout(() => initDataBuffer(), 5000);
+
     console.log("init data buffer");
     ws_broadcast("CASTER", "INITDATA", "called");
 
@@ -169,17 +171,18 @@ async function initDataBuffer() {
     ws_broadcast("CASTER","DBDATA", dbData);
     
     dbData.forEach(dbucket => {
+        if(dataBufferDebug[dbucket.NAMA_MESIN] === undefined) dataBufferDebug[dbucket.NAMA_MESIN] = [];
         dataBufferDebug[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
         dataBufferDebug[dbucket.NAMA_MESIN] = {
             DATE_FROM: dbucket.DATE_FROM,
+            DATE_TO: dbucket.DATE_TO,
             DATA: dbucket.DATA,
             DATA_COUNT: dbucket.DATA_COUNT,
+            NAMA_MESIN: dbucket.NAMA_MESIN,
         };
     });
 
     ws_broadcast("CASTER", "DATAD", dataBufferDebug);
-
-    setTimeout(() => initDataBuffer(), 5000);
 }
 
 

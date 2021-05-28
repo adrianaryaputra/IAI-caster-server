@@ -159,12 +159,14 @@ let dataBuffer = {};
 let dataBufferDebug = {};
 async function initDataBuffer() {
 
+    console.log("init data buffer");
     ws_broadcast("CASTER", "INITDATA", "called");
 
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
     });
 
+    console.log("dbdata", dbData);
     ws_broadcast("CASTER","DBDATA", dbData);
     
     dbData.forEach(dbucket => {
@@ -184,25 +186,18 @@ async function initDataBuffer() {
 
 
 function dataBuffering(name, data) {
-    console.log("DATA BUFFERING", name, data);
-    console.log("DATA BUFFER", dataBuffer);
     // check if time bucket is due
     let bufferDate;
     let currentDate;
     if(Object.keys(dataBuffer).length > 0){
         bufferDate = new Date(dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATE_FROM);
-        console.log("BUFFER DATE", bufferDate);
         currentDate = new Date((new Date()).setSeconds(0,0));
-        console.log("CURRENT DATE", currentDate);
     } else {
         dataBuffer[name] = [];
         bufferDate = new Date(0);
-        console.log("BUFFER DATE", bufferDate);
         currentDate = new Date();
-        console.log("CURRENT DATE", currentDate);
     }
     if(bufferDate < currentDate){
-        console.log("PUSHING NEW BUCKET");
         dataBuffer[name].push({
             DATE_FROM: currentDate,
             NAMA_MESIN: name,
@@ -211,7 +206,6 @@ function dataBuffering(name, data) {
             DATA: []
         })
     }
-    console.log()
     dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATA_COUNT += 1;
     dataBuffer[name][Object.keys(dataBuffer[name]).length-1].DATA.push({
         AI: data.AI,

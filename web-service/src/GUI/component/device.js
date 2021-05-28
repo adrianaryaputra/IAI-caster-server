@@ -67,7 +67,7 @@ export default class Device extends BasicComponent{
                 case "DATA":
                     console.log("RECV DATA", state[key]);
                     setChart(
-                        this.chartTemp.chart,
+                        this.chartTemp,
                         state[key].map(v => new Date(v.TIMESTAMP)),
                         transpose(state[key].map(v => v.TEMP))
                     )

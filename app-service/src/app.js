@@ -37,7 +37,7 @@ aedes.subscribe("CASTER/#", (a,cb) => {
     const msg = JSON.parse(a.payload.toString());
     deviceState[name] = deviceState[name] || {};
 
-    console.log(topic, msg);
+    // console.log(topic, msg);
 
     switch(command) {
         case "SERVER_STATE":
@@ -87,7 +87,7 @@ wss.on('connection', (ws) => {
     });
 });
 
-initDataBuffer();
+setTimeout(() => initDataBuffer(), 10000);
 
 
 function ws_broadcast(device, command, payload) {
@@ -179,7 +179,7 @@ async function initDataBuffer() {
 
     ws_broadcast("CASTER", "DATAD", dataBufferDebug);
 
-    setTimeout(() => initDataBuffer(), 10000);
+    setTimeout(() => initDataBuffer(), 5000);
 }
 
 

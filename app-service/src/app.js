@@ -59,13 +59,13 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             m[5] = m[5]*0.012;
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
-            ws_broadcast(name, "DATA", dataBuffer);
+            ws_broadcast(name, "DATA", dataBuffer[name]);
             db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
-            ws_broadcast(name, "DATA", dataBuffer);
+            ws_broadcast(name, "DATA", dataBuffer[name]);
             db_savedata(name);
     }
 

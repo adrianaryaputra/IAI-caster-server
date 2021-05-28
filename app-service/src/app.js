@@ -1,4 +1,5 @@
 let deviceState = {};
+let dataBuffer = {};
 
 // database import
 const {mongoose, model} = require('./db.model');
@@ -59,14 +60,12 @@ aedes.subscribe("CASTER/#", (a,cb) => {
             updateState(name, {[command]: m});
             ws_broadcast(name, "STATE", deviceState[name]);
             ws_broadcast(name, "DATA", dataBuffer);
-            ws_broadcast(name, "DATAD", dataBuffer);
             db_savedata(name);
             break;
         default:
             updateState(name, {[command]: msg.payload});
             ws_broadcast(name, "STATE", deviceState[name]);
             ws_broadcast(name, "DATA", dataBuffer);
-            ws_broadcast(name, "DATAD", dataBuffer);
             db_savedata(name);
     }
 
@@ -154,11 +153,9 @@ async function db_getdata(query) {
 
 
 
-let dataBuffer = {};
 async function initDataBuffer() {
 
     dataBuffer = {}
-
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(Date.now()-432e5)} 
     });
@@ -176,7 +173,6 @@ async function initDataBuffer() {
         });
     });
 
-    ws_broadcast("CASTER", "DATAD", dataBuffer);
     setTimeout(() => initDataBuffer(), 3e5);
 }
 

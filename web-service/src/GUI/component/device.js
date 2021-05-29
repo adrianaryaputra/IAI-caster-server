@@ -70,7 +70,7 @@ export default class Device extends BasicComponent{
                     setChart(
                         this.chartTempAlloy,
                         state[key].map(v => new Date(v.TIMESTAMP)),
-                        transpose(state[key].map(v => v.TEMP.slice(0,2)))
+                        transpose(state[key].map(v => [v.TEMP[1], v.TEMP[0]]))
                     );
                     setChart(
                         this.chartTempCooler,

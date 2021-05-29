@@ -494,8 +494,8 @@ function createTempAlloyChart({
                         display: true,
                         text: ''
                     },
-                    suggestedMin: 0,
-                    suggestedMax: 1,
+                    min: 500,
+                    suggestedMax: 800,
                 }
             }
         },
@@ -606,8 +606,8 @@ function createTempCoolerChart({
                         display: true,
                         text: ''
                     },
-                    suggestedMin: 0,
-                    suggestedMax: 1,
+                    min: 30,
+                    suggestedMax: 60,
                 }
             }
         },

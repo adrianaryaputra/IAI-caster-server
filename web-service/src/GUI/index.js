@@ -103,16 +103,13 @@ function wienerFilterData(pl) {
     return pl.map(minute => {
         let minData = minute.DATA;
         return minData.reduce((accMinDB, curMinDB, idxMinDB) => {
-            console.log("ACCMINDB", accMinDB, idxMinDB);
             if(idxMinDB == 0) return curMinDB;
-            
             // filter AI & TEMP
             for (const key of ["AI", "TEMP"]) {
                 if(Array.isArray(curMinDB[key])) curMinDB[key].forEach((ecur, eidx) => {
                     accMinDB[key][eidx] += (1 / (1 + eidx) * (ecur - accMinDB[key][eidx]))
                 });
             }
-
             return accMinDB;
         }, {});
     });

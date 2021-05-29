@@ -60,11 +60,7 @@ function ws_onMessage(evt) {
             for (const deviceName in parsedEvt.payload) {
                 let measureData = [];
                 if(Array.isArray(parsedEvt.payload[deviceName])) {
-                    measureData = measureData.concat(
-                        parsedEvt.payload[deviceName].reduce((acc,cur) => {
-                            if(Array.isArray(cur.DATA)) return acc.concat(cur.DATA);
-                        }, [])
-                    );
+                    measureData = measureData.concat(wienerFilterData(parsedEvt.payload[deviceName]));
                 }
 
                 measureData = measureData.sort((a,b) => {
@@ -100,3 +96,37 @@ const run = () => {
 }
 
 document.addEventListener("DOMContentLoaded", run)
+
+
+function wienerFilterData(pl) {
+
+    return pl.map(minute => {
+        let minData = minute.DATA;
+        return minData.reduce((accMinDB, curMinDB, idxMinDB) => {
+            if(idxMinDB=0) return curMinDB
+
+            // filter AI & TEMP
+            for (const key of ["AI", "TEMP"]) {
+                if(Array.isArray(curMinDB[key])) curMinDB.forEach((ecur, eidx) => {
+                    accMinDB[key][eidx] += (1 / (1 + eidx) * (ecur - accMinDB[key][eidx]))
+                });
+            }
+
+            return accMinDB;
+        }, {});
+    });
+
+    // return [
+    //     dataArr.reduce((acc,cur,idx) => {
+    //         if(idx=0) return cur;
+    //         return acc + ((1 / 1 + idx) * (cur - acc));
+    //     }, 0)
+    // ]
+}
+
+
+function allTheData(pl) {
+    return pl.reduce((acc,cur) => {
+        if(Array.isArray(cur.DATA)) return acc.concat(cur.DATA);
+    }, []);
+}

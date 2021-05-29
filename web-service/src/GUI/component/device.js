@@ -494,7 +494,7 @@ function createTempAlloyChart({
                         display: true,
                         text: ''
                     },
-                    min: 500,
+                    min: 600,
                     suggestedMax: 800,
                 }
             }

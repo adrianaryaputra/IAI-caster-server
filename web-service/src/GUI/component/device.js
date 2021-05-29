@@ -65,8 +65,8 @@ export default class Device extends BasicComponent{
                     break;
                 
                 case "DATA":
-                    console.log("RECV DATA", state[key]);
-                    console.log("chartTemp", this.chartTemp);
+                    // console.log("RECV DATA", state[key]);
+                    // console.log("chartTemp", this.chartTemp);
                     setChart(
                         this.chartTempAlloy,
                         state[key].map(v => new Date(v.TIMESTAMP)),
@@ -630,7 +630,7 @@ function createTempCoolerChart({
 
 
 function setChart(chart, labels, datapoints) {
-    console.log("updating chart...", chart, labels, datapoints);
+    // console.log("updating chart...", chart, labels, datapoints);
     chart.chart.data.labels = labels;
     datapoints.forEach((data, dataidx) => {
         chart.chart.data.datasets[dataidx].data = data;

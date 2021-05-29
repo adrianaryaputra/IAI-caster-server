@@ -107,7 +107,7 @@ function wienerFilterData(pl) {
 
             // filter AI & TEMP
             for (const key of ["AI", "TEMP"]) {
-                if(Array.isArray(curMinDB[key])) curMinDB.forEach((ecur, eidx) => {
+                if(Array.isArray(curMinDB[key])) curMinDB[key].forEach((ecur, eidx) => {
                     accMinDB[key][eidx] += (1 / (1 + eidx) * (ecur - accMinDB[key][eidx]))
                 });
             }

@@ -103,7 +103,7 @@ function wienerFilterData(pl) {
     return pl.map(minute => {
         let minData = minute.DATA;
         return minData.reduce((accMinDB, curMinDB, idxMinDB) => {
-            console.log("ACCMINDB", accMinDB);
+            console.log("ACCMINDB", accMinDB, idxMinDB);
             if(idxMinDB=0) return curMinDB;
 
             // filter AI & TEMP

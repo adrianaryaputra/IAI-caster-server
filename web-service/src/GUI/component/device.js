@@ -116,24 +116,27 @@ export default class Device extends BasicComponent{
             style: {
                 display: "grid",
                 margin: "1em 0",
-                gridTemplateColumns: "repeat(3, minmax(340px, 1fr))",
+                gridTemplateColumns: "repeat(2, minmax(340px, 1fr))",
                 gap: ".5em 2.5em"
             }
         });
 
         this.millMotorTopS  = new LabelText({label:"Mill Top Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
-        this.millMotorBtmS  = new LabelText({label:"Mill Bottom Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
-        this.coilerMotorS   = new LabelText({label:"Coiler Motor Spd.", value:"###", unit:"rpm"}, { parent: this.analogData.element() });
-
         this.millMotorTopC  = new LabelText({label:"Mill Top Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
+
+        this.millMotorBtmS  = new LabelText({label:"Mill Bottom Spd.", value:"###", unit:"mm/min"}, { parent: this.analogData.element() });
         this.millMotorBtmC  = new LabelText({label:"Mill Bottom Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
+
+        this.coilerMotorS   = new LabelText({label:"Coiler Motor Spd.", value:"###", unit:"rpm"}, { parent: this.analogData.element() });
         this.coilerMotorC   = new LabelText({label:"Coiler Motor Cur.", value:"###", unit:"Ampere"}, { parent: this.analogData.element() });
 
+
         this.tempInputAl        = new LabelText({label:"Input Alum. Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        this.tempCastAl         = new LabelText({label:"Cast Alum. Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+
         this.tempCoolInTop      = new LabelText({label:"Cool Top In Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
         this.tempCoolOutTop     = new LabelText({label:"Cool Top Out Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
-
-        this.tempCastAl         = new LabelText({label:"Cast Alum. Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
+        
         this.tempCoolInBtm      = new LabelText({label:"Cool Btm In Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
         this.tempCoolOutBtm     = new LabelText({label:"Cool Btm Out Temp.", value:"###", unit:"°C"}, { parent: this.analogData.element() });
 

@@ -610,7 +610,7 @@ function createTempCoolerChart({
                         text: ''
                     },
                     min: 25,
-                    max: 50,
+                    max: 35,
                 }
             }
         },

@@ -230,6 +230,31 @@ function mq_publish(topic, payload) {
 
 
 
+async function getHistory(client, command, time) {
+    let dat = {};
+    let dbData = await db_getdata({
+        DATE_FROM: {$gte: new Date(time-216e5)} ,
+        DATE_TO: {$lte: new Date(time+216e5)}
+    });
+    dbData.forEach(dbucket => {
+        if(dat[dbucket.NAMA_MESIN] === undefined) dat[dbucket.NAMA_MESIN] = [];
+        dat[dbucket.NAMA_MESIN].filter(data => new Date(data.DATE_FROM) > new Date(Date.now()-432e5));
+        dat[dbucket.NAMA_MESIN].push({
+            DATE_FROM: dbucket.DATE_FROM,
+            DATE_TO: dbucket.DATE_TO,
+            DATA: dbucket.DATA,
+            DATA_COUNT: dbucket.DATA_COUNT,
+            NAMA_MESIN: dbucket.NAMA_MESIN,
+        });
+    });
+    client.send(JSON.stringify({
+        command,
+        payload: dat,
+    }));
+}
+
+
+
 function ws_handleIncoming(client, command, value) {
     switch(command) {
         case "GET_STATE":
@@ -243,6 +268,9 @@ function ws_handleIncoming(client, command, value) {
                 command, 
                 payload: dataBuffer,
             }));
+        
+        case "HISTORY":
+            getHistory(client, command, value);
     }
 }
 

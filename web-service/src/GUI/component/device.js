@@ -8,8 +8,9 @@ import ChartComponent from './chart.js';
 
 export default class Device extends BasicComponent{
 
-    constructor(name, state = {}, options) {
+    constructor(ws, name, state = {}, options) {
         super(options);
+        this.ws = ws;
         this.name = name;
         this.draw();
         this.update(state);
@@ -165,6 +166,77 @@ export default class Device extends BasicComponent{
         this.hidrolikPK     = new Indicator({ valueON: "Hidrolik PK",       valueOFF: "Hidrolik PK",       }, { parent: this.digitalData.element(), style: indicatorStyle });
         this.hidrolikPB     = new Indicator({ valueON: "Hidrolik PB",       valueOFF: "Hidrolik PB",       }, { parent: this.digitalData.element(), style: indicatorStyle });
 
+        this.dateSelectorHolder = new BasicComponent({
+            parent: this.element(),
+            style: {
+                fontSize: "1.5em",
+                margin: "1em 0",
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(600px, 1fr))",
+                gap: "1em 2em",
+            }
+        });
+        
+        this.dateSelector = new InputDateTime({
+            label: "Tanggal",
+            value: new Date(),
+        },{
+            parent: this.dateSelectorHolder.element(),
+            style: {}
+        });
+        
+        this.findAndUpdateButtonHolder = new BasicComponent({
+            parent: this.dateSelectorHolder.element(),
+            style: {
+                display: "grid",
+                gridTemplateColumns: "repeat(2, auto)",
+                gap: "1em",
+            }
+        });
+        
+        this.findButton = new Button({
+            text: "Go to date",
+            buttonStyle: {
+                display: 'block',
+                width: '100%',
+                padding: '.2em',
+                borderRadius: '.2em',
+                backgroundColor: 'rgba(0,150,0,1)',
+            },
+            listener: {
+                click: () => {
+                    console.log("get date", this.dateSelector.getValue());
+                    // requestPonpminHist(dateSelector.getValue());
+                },
+            }
+        }, {
+            parent: this.findAndUpdateButtonHolder.element(),
+            style: {
+                textAlign: 'center',
+                cursor: 'pointer',
+            }
+        });
+        
+        this.updateButton = new Button({
+            text: "Latest",
+            buttonStyle: {
+                display: 'block',
+                width: '100%',
+                padding: '.2em',
+                borderRadius: '.2em',
+                backgroundColor: 'rgba(150,150,0,1)',
+            },
+            listener: {
+                click: () => location.reload(),
+            }
+        }, {
+            parent: this.findAndUpdateButtonHolder.element(),
+            style: {
+                textAlign: 'center',
+                cursor: 'pointer',
+            }
+        });
+
         this.chartData    = new BasicComponent({
             parent: this.element(),
             style: {
@@ -210,6 +282,16 @@ export default class Device extends BasicComponent{
             }
         });
         this.chartTempCooler      = createTempCoolerChart({parent: this.chartTempCoolerHold.element()});
+    }
+
+    requestDataHistory(date) {
+        this.ws.send(JSON.stringify({
+            command: "HISTORY",
+            value: {
+                device: this.name,
+                date: +new Date(date)
+            }
+        }));
     }
 
 }

@@ -39,7 +39,7 @@ function ws_onMessage(evt) {
         case "SERVER_STATE":
             for (const deviceName of Object.keys(parsedEvt.payload).sort()) {
                 console.log("creating", deviceName);
-                devices[deviceName] = new Device(deviceName, parsedEvt.payload[deviceName], {
+                devices[deviceName] = new Device(websocket, deviceName, parsedEvt.payload[deviceName], {
                     parent: deviceHolder.element(),
                     style: deviceStyle,
                 });
@@ -49,7 +49,7 @@ function ws_onMessage(evt) {
             if(devices[parsedEvt.device]) {
                 devices[parsedEvt.device].update(parsedEvt.payload);
             } else {
-                devices[parsedEvt.device] = new Device(parsedEvt.device, parsedEvt.payload, {
+                devices[parsedEvt.device] = new Device(websocket, parsedEvt.device, parsedEvt.payload, {
                     parent: deviceHolder.element(),
                     style: deviceStyle,
                 });
@@ -114,12 +114,6 @@ function wienerFilterData(pl) {
         }, {});
     });
 
-    // return [
-    //     dataArr.reduce((acc,cur,idx) => {
-    //         if(idx=0) return cur;
-    //         return acc + ((1 / 1 + idx) * (cur - acc));
-    //     }, 0)
-    // ]
 }
 
 

@@ -3,6 +3,7 @@ import LabelText from './label-text.js';
 import TitleText from './title-text.js';
 import Indicator from './indicator.js';
 import ChartComponent from './chart.js';
+import InputDateTime from './input-datetime.js';
 
 
 

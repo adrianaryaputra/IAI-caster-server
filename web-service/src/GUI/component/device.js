@@ -4,6 +4,7 @@ import TitleText from './title-text.js';
 import Indicator from './indicator.js';
 import ChartComponent from './chart.js';
 import InputDateTime from './input-datetime.js';
+import Button from './button.js';
 
 
 

@@ -582,7 +582,7 @@ function createTempAlloyChart({
                         text: ''
                     },
                     min: 600,
-                    suggestedMax: 800,
+                    max: 800,
                 }
             }
         },

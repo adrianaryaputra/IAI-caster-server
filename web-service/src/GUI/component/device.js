@@ -174,7 +174,7 @@ export default class Device extends BasicComponent{
                 fontSize: "1.5em",
                 margin: "1em 0",
                 display: "grid",
-                gridTemplateColumns: "repeat(2, minmax(600px, 1fr))",
+                gridTemplateColumns: "repeat(2, auto)",
                 gap: "1em 2em",
             }
         });

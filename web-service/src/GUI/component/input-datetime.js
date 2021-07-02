@@ -21,7 +21,7 @@ export default class InputDateTime extends BasicComponent{
         this.stylize(this.element(), {
             display: "grid",
             gap: ".5em",
-            gridTemplateColumns: "minmax(200px,.5fr) minmax(250px,1fr)",
+            gridTemplateColumns: "auto auto",
             gridAutoFlow: "row",
             // backgroundColor: "#000",
             borderRadius: ".3em",

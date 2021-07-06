@@ -268,7 +268,7 @@ function ws_handleIncoming(client, command, value) {
                 command, 
                 payload: dataBuffer,
             }));
-        
+            break;
         case "HISTORY":
             getHistory(client, command, value);
     }

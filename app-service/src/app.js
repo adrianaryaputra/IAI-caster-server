@@ -230,7 +230,7 @@ function mq_publish(topic, payload) {
 
 
 
-async function getHistory(client, command, time) {
+async function getHistory(client, command, time=Date.now()-216e5) {
     let dat = {};
     let dbData = await db_getdata({
         DATE_FROM: {$gte: new Date(time-216e5)} ,
@@ -271,6 +271,7 @@ function ws_handleIncoming(client, command, value) {
             break;
         case "HISTORY":
             getHistory(client, command, value);
+            break;
     }
 }
 
